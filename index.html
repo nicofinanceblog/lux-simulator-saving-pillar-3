@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+  <head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2WE88S3JVE"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-2WE88S3JVE");
+    </script>
+
+    <meta charset="UTF-8" />
+    
+    <title>Pillar 3 Investment Simulator</title>
+    
+    <meta name="description" content="Simulate and compare Pillar 3 versus brokerage ETF scenarios with customizable fees, taxes, and charts." />
+    
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Pillar 3 Investment Simulator" />
+    <meta property="og:description" content="Simulate and compare Pillar 3 versus brokerage ETF scenarios with customizable fees, taxes, and charts." />
+    <meta property="og:image" content="/images/icon-512.png" />
+    
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Pillar 3 Investment Simulator" />
+    <meta name="twitter:description" content="Simulate and compare Pillar 3 versus brokerage ETF scenarios with customizable fees, taxes, and charts." />
+    <meta name="twitter:image" content="/images/icon-512.png" />
+    
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/icon-192.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/images/icon-192.png" />
+    <link rel="apple-touch-icon" href="/images/icon-192.png" />
+
+    <!-- Tailwind via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Custom styles -->
+    <link rel="stylesheet" href="style.css" />
+
+    <link rel="manifest" href="site.manifest.json" />
+    <meta name="theme-color" content="#0f172a" />
+
+    <script defer src="translations.js"></script>
+    <!-- App logic -->
+    <script defer src="script.js"></script>
+  </head>
+  <body class="min-h-screen theme-dark">
+    <div class="min-h-screen flex items-center justify-center p-4">
+      <main class="w-full max-w-7xl mx-auto space-y-8 pb-20">
+        <!-- Header -->
+        <header class="space-y-3">
+          <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
+            <div>
+              <h1 id="title-main" class="text-2xl md:text-3xl font-semibold">Luxembourg 🇱🇺 Pillar 3 Retirement Savings Calculator</h1>
+              <p id="header-description" class="text-slate-400 max-w-3xl text-sm md:text-base mt-1">
+                Compare Pillar 3 retirement savings to investing in ETFs through a regular brokerage account.
+              </p>
+            </div>
+
+            <!-- Controls: language + theme -->
+            <div class="flex items-center gap-2 self-start">
+              <button
+                id="lang-toggle"
+                type="button"
+                class="inline-flex items-center justify-center rounded-full border border-slate-700 bg-slate-900 px-3 py-1 text-sm shadow-sm hover:bg-slate-800 transition"
+                title="Change language / Changer de langue"
+              >
+                🇬🇧
+              </button>
+              <button
+                id="theme-toggle"
+                type="button"
+                class="inline-flex items-center justify-center rounded-full border border-slate-700 bg-slate-900 px-3 py-1 text-sm shadow-sm hover:bg-slate-800 transition"
+                title="Toggle light/dark theme"
+              >
+                🌙
+              </button>
+            </div>
+          </div>
+        </header>
+
+        <!-- Global parameters -->
+        <section class="bg-slate-900/60 border border-slate-800 rounded-2xl p-5 shadow-lg">
+          <div class="space-y-4">
+            <h2 id="global-params-title" class="text-lg font-medium text-slate-100">Global parameters</h2>
+
+            <form id="sim-form" onsubmit="return false;" class="grid md:grid-cols-2 gap-4">
+              <!-- Performance -->
+              <div>
+                <label for="performance" id="label-performance" class="block text-sm font-medium text-slate-200">Performance (% per year)</label>
+                <p id="help-performance" class="text-xs text-slate-500 mb-1">Gross annual performance of the investment.</p>
+                <input
+                  id="performance"
+                  type="number"
+                  step="0.01"
+                  class="w-full rounded-xl bg-slate-900 border border-slate-700 px-3 py-2 text-sm text-slate-100 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                  value="7.5"
+                />
+              </div>
+
+              <!-- Annual contribution -->
+              <div>
+                <label for="deposit" id="label-deposit" class="block text-sm font-medium text-slate-200">Annual contribution (EUR)</label>
+                <p id="help-deposit" class="text-xs text-slate-500 mb-1">Constant amount paid once per year (e.g. 6000€).</p>
+                <input
+                  id="deposit"
+                  type="number"
+                  step="100"
+                  class="w-full rounded-xl bg-slate-900 border border-slate-700 px-3 py-2 text-sm text-slate-100 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                  value="6000"
+                />
+              </div>
+
+              <!-- Tax-deductible ceiling -->
+              <div>
+                <label for="taxCeiling" id="label-tax-ceiling" class="block text-sm font-medium text-slate-200">Tax-deductible ceiling (EUR)</label>
+                <p id="help-tax-ceiling" class="text-xs text-slate-500 mb-1">Max annual amount eligible for tax deduction (e.g. 3200€).</p>
+                <input
+                  id="taxCeiling"
+                  type="number"
+                  step="100"
+                  class="w-full rounded-xl bg-slate-900 border border-slate-700 px-3 py-2 text-sm text-slate-100 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                  value="3200"
+                />
+              </div>
+
+              <!-- Years -->
+              <div>
+                <label for="years" id="label-years" class="block text-sm font-medium text-slate-200">Number of years (simulation)</label>
+                <p id="help-years" class="text-xs text-slate-500 mb-1">Total duration of the simulation (e.g. 25 years).</p>
+                <input
+                  id="years"
+                  type="number"
+                  step="1"
+                  min="1"
+                  max="60"
+                  class="w-full rounded-xl bg-slate-900 border border-slate-700 px-3 py-2 text-sm text-slate-100 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                  value="25"
+                />
+              </div>
+            </form>
+          </div>
+        </section>
+
+        <!-- Scenario parameters -->
+        <section class="grid lg:grid-cols-2 gap-6 items-stretch">
+          <!-- Scenario Pillar 3 -->
+          <div class="flex flex-col gap-4 h-full">
+            <div class="bg-slate-950/60 border border-slate-800 rounded-2xl p-4 space-y-4">
+              <div class="flex items-center justify-between gap-2">
+                <h2 id="scenario-a-title" class="text-base font-semibold text-slate-100">Scenario Pillar 3</h2>
+                <span id="scenario-a-badge" class="inline-flex items-center rounded-full bg-red-500/10 text-red-300 px-2.5 py-0.5 text-[11px] font-medium">
+                  Tax on profit at end
+                </span>
+              </div>
+
+              <div class="space-y-3">
+                <!-- Entry fee A -->
+                <div>
+                  <label for="entryFeeA" id="label-entry-a" class="block text-xs font-medium text-slate-200">Entry fee (%)</label>
+                  <div class="mt-2">
+                    <input
+                      id="entryFeeA"
+                      type="number"
+                      step="0.01"
+                      class="w-full rounded-xl bg-slate-900 border border-slate-700 px-3 py-1.5 text-xs text-slate-100 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                      value="2"
+                    />
+                  </div>
+                </div>
+
+                <!-- Mgmt fee A -->
+                <div>
+                  <label for="mgmtFeeA" id="label-mgmt-a" class="block text-xs font-medium text-slate-200">Management fee (% per year)</label>
+                  <div class="mt-2">
+                    <input
+                      id="mgmtFeeA"
+                      type="number"
+                      step="0.01"
+                      class="w-full rounded-xl bg-slate-900 border border-slate-700 px-3 py-1.5 text-xs text-slate-100 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                      value="2.5"
+                    />
+                  </div>
+                </div>
+
+                <!-- Tax rate for Scenario Pillar 3 (Taux d'imposition) -->
+                <div class="mt-2 space-y-1">
+                  <div class="mt-2">
+                    <div class="grid grid-cols-3 gap-3 items-center">
+                      <!-- Tax saving handling -->
+                      <div class="col-span-2">
+                        <label for="taxSavingModeA" id="label-reinvest-a" class="block text-xs font-medium text-slate-200">Reinvest tax savings</label>
+                        <div class="mt-2">
+                          <select
+                            id="taxSavingModeA"
+                            class="w-full rounded-xl bg-slate-900 border border-slate-700 px-3 py-1.5 text-xs text-slate-100 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                          >
+                            <option id="option-end-a" value="end">Add tax savings at the end</option>
+                            <option id="option-reinvest-a" value="reinvest">Reinvest tax savings</option>
+                            <option id="option-none-a" value="none">Do nothing</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <!-- Tax rate input -->
+                      <div class="col-span-1">
+                        <label for="taxRateA" id="label-tax-rate-a" class="block text-xs font-medium text-slate-200">Marginal tax rate (%)</label>
+                        <div class="mt-2">
+                          <input
+                            id="taxRateA"
+                            type="number"
+                            step="0.01"
+                            class="w-full rounded-xl bg-slate-900 border border-slate-700 px-3 py-1.5 text-xs text-slate-100 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                            value="30"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <p id="note-scenario-a" class="text-[11px] text-slate-500 mt-2">Scenario Pillar 3 uses a 20% tax on profit at the end of the simulation.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Scenario Brokerage Account with ETF -->
+          <div class="flex flex-col gap-4 h-full">
+            <div class="bg-slate-950/60 border border-slate-800 rounded-2xl p-4 space-y-4 pb-8">
+              <div class="flex items-center justify-between gap-2">
+                <h2 id="scenario-b-title" class="text-base font-semibold text-slate-100">Scenario Brokerage Account with ETF</h2>
+                <span id="scenario-b-badge" class="inline-flex items-center rounded-full bg-sky-500/10 text-sky-300 px-2.5 py-0.5 text-[11px] font-medium">
+                  0% tax on profit
+                </span>
+              </div>
+
+              <div class="space-y-3">
+                <!-- Entry fee B -->
+                <div>
+                  <label for="entryFeeB" id="label-entry-b" class="block text-xs font-medium text-slate-200">Entry fee (%)</label>
+                  <div class="mt-2">
+                    <input
+                      id="entryFeeB"
+                      type="number"
+                      step="0.01"
+                      class="w-full rounded-xl bg-slate-900 border border-slate-700 px-3 py-1.5 text-xs text-slate-100 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent"
+                      value="0"
+                    />
+                  </div>
+                </div>
+
+                <!-- Mgmt fee B -->
+                <div>
+                  <label for="mgmtFeeB" id="label-mgmt-b" class="block text-xs font-medium text-slate-200">Management fee (% per year)</label>
+                  <div class="mt-2">
+                    <input
+                      id="mgmtFeeB"
+                      type="number"
+                      step="0.01"
+                      class="w-full rounded-xl bg-slate-900 border border-slate-700 px-3 py-1.5 text-xs text-slate-100 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-transparent"
+                      value="0.25"
+                    />
+                  </div>
+                </div>
+
+                <p id="note-scenario-b" class="text-[11px] text-slate-500">Scenario Brokerage Account with ETF assumes no tax on the profit at the end (0%).</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Scenario results -->
+        <section class="grid lg:grid-cols-2 gap-6 items-stretch">
+          <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-4 md:p-5 space-y-4 flex-1">
+            <div class="flex items-center justify-between gap-2 mb-2">
+              <h2 id="scenario-a-results-title" class="text-base md:text-lg font-semibold text-slate-100">Scenario Pillar 3 – Results</h2>
+              <span
+                id="scenario-a-results-badge"
+                class="inline-flex items-center rounded-full bg-red-500/10 text-red-300 px-2.5 py-0.5 text-[11px] font-medium"
+              >
+                Taxed
+              </span>
+            </div>
+
+            <!-- Summary cards A -->
+            <div class="grid grid-cols-2 gap-3 text-xs md:text-sm">
+              <div class="bg-slate-950/50 border border-slate-800 rounded-xl p-3">
+                <p id="card-a-total-title" class="text-[11px] uppercase tracking-wide text-slate-500">Total contributions</p>
+                <p id="total-contrib-a" class="mt-1 text-sm font-semibold text-slate-50">€0</p>
+              </div>
+              <div class="bg-slate-950/50 border border-slate-800 rounded-xl p-3">
+                <p id="card-a-capital-before-title" class="text-[11px] uppercase tracking-wide text-slate-500">Capital before tax</p>
+                <p id="capital-before-tax-a" class="mt-1 text-sm font-semibold text-slate-50">€0</p>
+              </div>
+              <div class="bg-slate-950/50 border border-slate-800 rounded-xl p-3">
+                <p id="card-a-profit-title" class="text-[11px] uppercase tracking-wide text-slate-500">Profit before tax</p>
+                <p id="profit-before-tax-a" class="mt-1 text-sm font-semibold text-slate-50">€0</p>
+              </div>
+              <div class="bg-slate-950/50 border border-slate-800 rounded-xl p-3">
+                <p id="card-a-capital-after-title" class="text-[11px] uppercase tracking-wide text-slate-500">Capital after tax</p>
+                <p id="capital-after-tax-a" class="mt-1 text-sm font-semibold text-slate-50">€0</p>
+              </div>
+            </div>
+
+            <!-- Table A -->
+            <div class="mt-3">
+              <p id="table-a-helper" class="text-[11px] text-slate-500 mb-2">
+                All values in EUR. Same yearly contribution; tax on profit is applied once at the end of the period.
+              </p>
+              <div class="overflow-x-auto">
+                <table class="min-w-full text-xs md:text-sm text-left">
+                  <thead class="bg-slate-900/80 border-b border-slate-800">
+                    <tr>
+                      <th id="th-year-a" class="px-3 py-2 font-medium text-slate-300">Year</th>
+                      <th id="th-start-a" class="px-3 py-2 font-medium text-slate-300 text-right">Starting capital</th>
+                      <th id="th-contrib-a" class="px-3 py-2 font-medium text-slate-300 text-right">Contribution</th>
+                      <th id="th-interest-a" class="px-3 py-2 font-medium text-slate-300 text-right">Interest</th>
+                      <th id="th-end-a" class="px-3 py-2 font-medium text-slate-300 text-right">Ending capital</th>
+                    </tr>
+                  </thead>
+                  <tbody id="results-body-a" class="divide-y divide-slate-800"></tbody>
+                </table>
+              </div>
+
+              <!-- Tax summary A -->
+              <div class="mt-4 pt-3 border-t border-slate-800 text-xs md:text-sm text-slate-200 space-y-1 tax-summary">
+                <h3 id="tax-title-a" class="text-sm font-medium text-slate-100">Scenario Pillar 3</h3>
+                <p>
+                  <span id="tax-label-total-a">Total contributions:</span>
+                  <span id="tax-total-contrib-a" class="font-semibold">€0</span>
+                </p>
+                <p>
+                  <span id="tax-label-profit-a">Profit before tax:</span>
+                  <span id="tax-profit-a" class="font-semibold">€0</span>
+                </p>
+                <p>
+                  <span id="tax-label-final-a">Final ending capital:</span>
+                  <span id="tax-final-capital-a" class="font-semibold">€0</span>
+                </p>
+                <p>
+                  <span id="tax-label-amount-a">Tax (20% on profit):</span>
+                  <span id="tax-amount-a" class="font-semibold">€0</span>
+                </p>
+                <p>
+                  <span id="tax-label-after-a">Capital after tax:</span>
+                  <span id="tax-capital-after-a" class="font-semibold">€0</span>
+                </p>
+                <p>
+                  <span id="tax-label-saving-a">Tax savings added at end:</span>
+                  <span id="tax-savings-a" class="font-semibold">€0</span>
+                </p>
+                <p>
+                  <span id="tax-label-after-saving-a">Final total (after tax + savings):</span>
+                  <span id="tax-capital-after-saving-a" class="font-semibold">€0</span>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-slate-900/60 border border-slate-800 rounded-2xl p-4 md:p-5 space-y-4 flex-1">
+            <div class="flex items-center justify-between gap-2 mb-2">
+              <h2 id="scenario-b-results-title" class="text-base md:text-lg font-semibold text-slate-100">Scenario Brokerage Account with ETF – Results</h2>
+              <span
+                id="scenario-b-results-badge"
+                class="inline-flex items-center rounded-full bg-sky-500/10 text-sky-300 px-2.5 py-0.5 text-[11px] font-medium"
+              >
+                No tax
+              </span>
+            </div>
+
+            <!-- Summary cards B -->
+            <div class="grid grid-cols-2 gap-3 text-xs md:text-sm">
+              <div class="bg-slate-950/50 border border-slate-800 rounded-xl p-3">
+                <p id="card-b-total-title" class="text-[11px] uppercase tracking-wide text-slate-500">Total contributions</p>
+                <p id="total-contrib-b" class="mt-1 text-sm font-semibold text-slate-50">€0</p>
+              </div>
+              <div class="bg-slate-950/50 border border-slate-800 rounded-xl p-3">
+                <p id="card-b-capital-before-title" class="text-[11px] uppercase tracking-wide text-slate-500">Capital before tax</p>
+                <p id="capital-before-tax-b" class="mt-1 text-sm font-semibold text-slate-50">€0</p>
+              </div>
+              <div class="bg-slate-950/50 border border-slate-800 rounded-xl p-3">
+                <p id="card-b-profit-title" class="text-[11px] uppercase tracking-wide text-slate-500">Profit before tax</p>
+                <p id="profit-before-tax-b" class="mt-1 text-sm font-semibold text-slate-50">€0</p>
+              </div>
+              <div class="bg-slate-950/50 border border-slate-800 rounded-xl p-3">
+                <p id="card-b-capital-after-title" class="text-[11px] uppercase tracking-wide text-slate-500">Capital after tax</p>
+                <p id="capital-after-tax-b" class="mt-1 text-sm font-semibold text-slate-50">€0</p>
+              </div>
+            </div>
+
+            <!-- Table B -->
+            <div class="mt-3">
+              <p id="table-b-helper" class="text-[11px] text-slate-500 mb-2">
+                All values in EUR. Same yearly contribution; no tax is applied on the final profit (0%).
+              </p>
+              <div class="overflow-x-auto">
+                <table class="min-w-full text-xs md:text-sm text-left">
+                  <thead class="bg-slate-900/80 border-b border-slate-800">
+                    <tr>
+                      <th id="th-year-b" class="px-3 py-2 font-medium text-slate-300">Year</th>
+                      <th id="th-start-b" class="px-3 py-2 font-medium text-slate-300 text-right">Starting capital</th>
+                      <th id="th-contrib-b" class="px-3 py-2 font-medium text-slate-300 text-right">Contribution</th>
+                      <th id="th-interest-b" class="px-3 py-2 font-medium text-slate-300 text-right">Interest</th>
+                      <th id="th-end-b" class="px-3 py-2 font-medium text-slate-300 text-right">Ending capital</th>
+                    </tr>
+                  </thead>
+                  <tbody id="results-body-b" class="divide-y divide-slate-800"></tbody>
+                </table>
+              </div>
+
+              <!-- Tax summary B -->
+              <div class="mt-4 pt-3 border-t border-slate-800 text-xs md:text-sm text-slate-200 space-y-1 tax-summary">
+                <h3 id="tax-title-b" class="text-sm font-medium text-slate-100">Scenario Brokerage Account with ETF</h3>
+                <p>
+                  <span id="tax-label-total-b">Total contributions:</span>
+                  <span id="tax-total-contrib-b" class="font-semibold">€0</span>
+                </p>
+                <p>
+                  <span id="tax-label-profit-b">Profit before tax:</span>
+                  <span id="tax-profit-b" class="font-semibold">€0</span>
+                </p>
+                <p>
+                  <span id="tax-label-final-b">Final ending capital:</span>
+                  <span id="tax-final-capital-b" class="font-semibold">€0</span>
+                </p>
+                <p>
+                  <span id="tax-label-amount-b">Tax (0% on profit):</span>
+                  <span id="tax-amount-b" class="font-semibold">€0</span>
+                </p>
+                <p>
+                  <span id="tax-label-after-b">Capital after tax:</span>
+                  <span id="tax-capital-after-b" class="font-semibold">€0</span>
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Comparison chart -->
+        <section class="bg-slate-900/60 border border-slate-800 rounded-2xl p-4 md:p-5 space-y-3">
+          <h2 id="chart-section-title" class="text-base md:text-lg font-semibold text-slate-100">Comparison charts</h2>
+          <p id="chart-section-helper" class="text-[11px] text-slate-500">Charts show the capital for each year (final year after tax when applicable).</p>
+          <div class="space-y-4">
+            <div class="h-[50vh]">
+              <canvas id="comparison-chart"></canvas>
+            </div>
+            <div class="h-[50vh]">
+              <canvas id="comparison-line-chart"></canvas>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <footer class="fixed bottom-0 left-0 right-0 bg-slate-950/70 backdrop-blur border-t border-slate-800 text-slate-200 py-2 z-20">
+      <div class="max-w-7xl mx-auto px-4 flex items-center justify-between text-sm">
+        <a
+          href="https://www.linkedin.com/in/nicolas-lequeux-5b02806"
+          target="_blank"
+          rel="noreferrer"
+          class="flex items-center gap-2 hover:text-red-400 transition"
+          aria-label="LinkedIn profile"
+          title="LinkedIn profile"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M4.98 3.5C3.33 3.5 2 4.83 2 6.48c0 1.65 1.33 2.98 2.98 2.98 1.65 0 2.98-1.33 2.98-2.98C7.96 4.83 6.63 3.5 4.98 3.5zM2.4 21h5.16v-11H2.4v11zm7.92-11h4.94v1.53h.07c.69-1.31 2.38-2.69 4.9-2.69 5.24 0 6.2 3.45 6.2 7.92v8.24h-5.16v-7.3c0-1.74-.03-3.98-2.42-3.98-2.42 0-2.79 1.89-2.79 3.85v7.43h-5.15V10z"
+            />
+          </svg>
+          <span class="hidden sm:inline">LinkedIn</span>
+        </a>
+
+        <span class="text-center text-xs sm:text-sm"> Made with <span class="text-red-500 animate-pulse leading-none">❤</span> by Nicolas </span>
+
+        <a
+          href="https://nlxfinance.wordpress.com/"
+          target="_blank"
+          rel="noreferrer"
+          class="flex items-center gap-2 hover:text-red-400 transition"
+          aria-label="Blog on WordPress"
+          title="Blog on WordPress"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M12 0C5.372 0 0 5.372 0 12c0 6.627 5.372 12 12 12s12-5.373 12-12c0-6.628-5.372-12-12-12zm0 1.8c1.9 0 3.64.682 4.978 1.814-2.204.184-4.39 2.6-5.866 6.094-1.476 3.494-1.582 6.332-1.582 6.332-.566-1.7-1.2-4.194-1.2-4.194C7.383 8.79 9.556 1.8 12 1.8zm4.878 2.632a9.998 9.998 0 0 0-3.356 5.586c1.02-2.66 2.994-5.3 3.356-5.586zM12 22.2c-5.655 0-10.2-4.545-10.2-10.2 0-1.072.15-2.105.432-3.076 1.826 3.018 5.37 9.446 5.37 9.446s1.693-3.05 2.688-4.757c.995-1.707 1.776-2.686 1.776-2.686s1.003 3.922 3.378 7.07c.162-.317.325-.638.49-.96-.808-1.416-2.308-3.57-2.308-3.57s2.373-1.898 4.66-2.618c.34.734.528 1.518.528 2.342 0 5.654-4.546 10.2-10.2 10.2z"
+            />
+          </svg>
+          <span class="hidden sm:inline">WordPress</span>
+        </a>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,154 @@
+/* style.css */
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+/* Base smoothing */
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Dark theme (default) */
+body.theme-dark {
+    background-color: #020617;
+    color: #e5e7eb;
+}
+
+/* Light theme */
+body.theme-light {
+    background-color: #f8fafc;
+    color: #020617;
+}
+
+/* Override some Tailwind dark backgrounds in light mode */
+body.theme-light .bg-slate-950,
+body.theme-light .bg-slate-950\/50,
+body.theme-light .bg-slate-950\/60,
+body.theme-light .bg-slate-950\/70,
+body.theme-light .bg-slate-900\/60,
+body.theme-light .bg-slate-900\/70,
+body.theme-light .bg-slate-900\/80 {
+    background-color: rgba(255, 255, 255, 0.96);
+}
+
+body.theme-light .border-slate-800 {
+    border-color: #e5e7eb;
+}
+
+/* Text colors */
+body.theme-light .text-slate-50,
+body.theme-light .text-slate-100,
+body.theme-light .text-slate-200,
+body.theme-light .text-slate-300 {
+    color: #0f172a;
+}
+
+body.theme-light .text-slate-400 {
+    color: #4b5563;
+}
+
+body.theme-light .text-slate-500 {
+    color: #6b7280;
+}
+
+/* Buttons in light mode */
+body.theme-light #lang-toggle,
+body.theme-light #theme-toggle {
+    background-color: #ffffff;
+    border-color: #e5e7eb;
+}
+
+body.theme-light #lang-toggle:hover,
+body.theme-light #theme-toggle:hover {
+    background-color: #e5e7eb;
+}
+
+/* Form fields in light mode */
+body.theme-light input,
+body.theme-light select,
+body.theme-light textarea {
+    background-color: #ffffff;
+    color: #0f172a;
+    border-color: #cbd5e1;
+}
+
+body.theme-light input:focus,
+body.theme-light select:focus,
+body.theme-light textarea:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.25);
+    border-color: #10b981;
+}
+
+/* Badges contrast in light mode */
+body.theme-light #scenario-a-badge {
+    background-color: #fef2f2;
+    color: #991b1b;
+}
+
+body.theme-light #scenario-b-badge {
+    background-color: #e0f2fe;
+    color: #075985;
+}
+
+body.theme-light #scenario-a-results-badge {
+    background-color: #fef2f2;
+    color: #991b1b;
+}
+
+body.theme-light #scenario-b-results-badge {
+    background-color: #e0f2fe;
+    color: #075985;
+}
+
+/* Table headers in light mode */
+body.theme-light table thead tr {
+    background-color: #f1f5f9;
+}
+
+body.theme-light table thead th {
+    color: #0f172a;
+}
+
+/* Visual cue when the tax rate input is disabled */
+#taxRateA:disabled {
+    cursor: not-allowed;
+    border-color: #1f2937;
+    color: #94a3b8;
+    background-image: repeating-linear-gradient(45deg, #0b1223 0, #0b1223 10px, #111827 10px, #111827 20px);
+}
+
+/* Light theme version of the disabled tax rate input */
+body.theme-light #taxRateA:disabled {
+    border-color: #cbd5e1;
+    color: #94a3b8;
+    background-image: repeating-linear-gradient(45deg, #e2e8f0 0, #e2e8f0 10px, #f1f5f9 10px, #f1f5f9 20px);
+}
+
+/* Tax summary readability */
+.tax-summary p {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 8px;
+    line-height: 1.6;
+    border-radius: 8px;
+}
+
+.tax-summary p:nth-of-type(odd) {
+    background-color: rgba(255, 255, 255, 0.03);
+}
+
+.tax-summary span:last-child {
+    margin-left: auto;
+    text-align: right;
+}
+
+body.theme-light .tax-summary p:nth-of-type(odd) {
+    background-color: #f1f5f9;
+}
