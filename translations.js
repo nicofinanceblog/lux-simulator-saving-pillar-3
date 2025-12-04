@@ -32,6 +32,7 @@ window.translations = {
     "label-entry-b": "Entry fee (%)",
     "label-mgmt-b": "Management fee (% per year)",
     "note-scenario-b": "Scenario Brokerage Account with ETF assumes no tax on the profit at the end (0%).",
+    "note-scenario-b-tax": "In Luxembourg, Capital Gains Tax is 0% for investments held more than 6 months, by an individual, in a regular brokerage account.",
 
     "scenario-a-results-title": "Scenario Pillar 3 – Results",
     "scenario-a-results-badge": "Taxed",
@@ -106,6 +107,7 @@ window.translations = {
     "label-entry-b": "Frais d’entrée (%)",
     "label-mgmt-b": "Frais de gestion (% par an)",
     "note-scenario-b": "Le scénario Compte Tître ETF ne subit aucun impôt sur la plus-value finale (0%).",
+    "note-scenario-b-tax": "Au Luxembourg, l’impôt sur les plus-values est de 0% pour les investissements détenus plus de 6 mois, par un particulier, dans un compte-titres classique.",
 
     "scenario-a-results-title": "Scénario Pilier 3 – Résultats",
     "scenario-a-results-badge": "Imposé",

@@ -14,24 +14,44 @@
     </script>
 
     <meta charset="UTF-8" />
-    
-    <title>Pillar 3 Investment Simulator</title>
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Simulate and compare Pillar 3 versus brokerage ETF scenarios with customizable fees, taxes, and charts." />
-    
-    <meta property="og:type" content="website" />
+    <meta
+      name="keywords"
+      content="Pillar 3, Investment Simulator, Luxembourg, Retirement Savings, ETF, Brokerage Account, Financial Calculator, Tax Deduction, Investment Fees, Tax on Profit"
+    />
+    <meta name="author" content="Nicolas Lequeux" />
+    <meta name="theme-color" content="#0f172a" />
+
+    <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="Pillar 3 Investment Simulator" />
     <meta property="og:description" content="Simulate and compare Pillar 3 versus brokerage ETF scenarios with customizable fees, taxes, and charts." />
-    <meta property="og:image" content="/images/icon-512.png" />
-    
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://nicofinanceblog.github.io/lux-simulator-saving-pillar-3/" />
+    <meta property="og:site_name" content="Pillar 3 Investment Simulator" />
+
+    <meta property="og:image" content="https://nicofinanceblog.github.io/lux-simulator-saving-pillar-3/images/preview.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="628" />
+    <meta property="og:image:alt" content="Pillar 3 vs Brokerage ETF comparison simulator" />
+    <meta property="og:image:type" content="image/png" />
+
+    <!-- Twitter Card Meta Tags -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Pillar 3 Investment Simulator" />
     <meta name="twitter:description" content="Simulate and compare Pillar 3 versus brokerage ETF scenarios with customizable fees, taxes, and charts." />
-    <meta name="twitter:image" content="/images/icon-512.png" />
-    
-    <link rel="icon" type="image/png" sizes="32x32" href="/images/icon-192.png" />
-    <link rel="icon" type="image/png" sizes="192x192" href="/images/icon-192.png" />
-    <link rel="apple-touch-icon" href="/images/icon-192.png" />
+    <meta name="twitter:image" content="https://nicofinanceblog.github.io/lux-simulator-saving-pillar-3/images/preview.png" />
+    <meta name="twitter:image:alt" content="Pillar 3 vs Brokerage ETF comparison simulator" />
+
+    <!-- Favicon and App Icons -->
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png" />
+    <link rel="manifest" href="site.manifest.json" />
+
+    <!-- Title -->
+    <title>Pillar 3 Investment Simulator</title>
 
     <!-- Tailwind via CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -42,11 +62,8 @@
     <!-- Custom styles -->
     <link rel="stylesheet" href="style.css" />
 
-    <link rel="manifest" href="site.manifest.json" />
-    <meta name="theme-color" content="#0f172a" />
-
+    <!-- Custom scripts -->
     <script defer src="translations.js"></script>
-    <!-- App logic -->
     <script defer src="script.js"></script>
   </head>
   <body class="min-h-screen theme-dark">
@@ -269,6 +286,9 @@
                 </div>
 
                 <p id="note-scenario-b" class="text-[11px] text-slate-500">Scenario Brokerage Account with ETF assumes no tax on the profit at the end (0%).</p>
+                <p id="note-scenario-b-tax" class="text-[11px] text-slate-500">
+                  In Luxembourg, Capital Gains Tax is 0% for investments held more than 6 months, by an individual, in a regular brokerage account.
+                </p>
               </div>
             </div>
           </div>
