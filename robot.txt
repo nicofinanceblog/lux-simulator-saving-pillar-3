@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://nicofinanceblog.github.io/lux-simulator-saving-pillar-3/sitemap.xml

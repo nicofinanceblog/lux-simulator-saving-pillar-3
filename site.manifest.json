@@ -2,12 +2,13 @@
   "name": "Pillar 3 Investment Simulator",
   "short_name": "Pillar 3 Sim",
   "description": "Compare saving Pillar 3 vs brokerage account scenarios with customizable fees and tax settings.",
-  "start_url": ".",
+  "start_url": "/lux-simulator-saving-pillar-3/",
+  "scope": "/lux-simulator-saving-pillar-3/",
   "lang": "en",
-  "scope": ".",
   "display": "standalone",
   "background_color": "#0f172a",
   "theme_color": "#0f172a",
+  "purpose": "any maskable",
   "icons": [
     {
       "src": "images/icon-192x192.png",
