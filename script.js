@@ -32,6 +32,7 @@
   const taxFinalCapitalAEl = document.getElementById("tax-final-capital-a");
   const taxAmountAEl = document.getElementById("tax-amount-a");
   const taxCapitalAfterAEl = document.getElementById("tax-capital-after-a");
+  const taxFeesAEl = document.getElementById("tax-fees-a");
   const taxSavingAEl = document.getElementById("tax-savings-a");
   const taxCapitalAfterSavingAEl = document.getElementById("tax-capital-after-saving-a");
 
@@ -47,6 +48,7 @@
   const taxFinalCapitalBEl = document.getElementById("tax-final-capital-b");
   const taxAmountBEl = document.getElementById("tax-amount-b");
   const taxCapitalAfterBEl = document.getElementById("tax-capital-after-b");
+  const taxFeesBEl = document.getElementById("tax-fees-b");
 
   // Tables
   const resultsBodyA = document.getElementById("results-body-a");
@@ -60,6 +62,11 @@
     style: "currency",
     currency: "EUR",
     maximumFractionDigits: 2,
+  });
+  const currencyFormatterNoDecimals = new Intl.NumberFormat("fr-LU", {
+    style: "currency",
+    currency: "EUR",
+    maximumFractionDigits: 0,
   });
 
   function parseNumber(input, fallback = 0) {
@@ -83,8 +90,8 @@
    * @param {number} extraTaxRatePct   Extra "Taux d'imposition" (%) on contribution to reinvest (Scenario Pillar 3 only)
    * @param {"reinvest"|"end"|"none"} taxSavingMode  How to handle the tax saving (reinvest, add at end, or ignore)
    * @param {number} taxDeductibleCeiling  Maximum yearly contribution eligible for tax deduction
-   * @returns {{rows: Array<{year, startingCapital, grossContribution, netContribution, interest, endingCapital}>, taxSavingAtEnd: number}}
-   */
+   * @returns {{rows: Array<{year, startingCapital, grossContribution, netContribution, interest, endingCapital, entryFeePaid, mgmtFeePaid, cumulativeFees}>, taxSavingAtEnd: number}}
+  */
   function simulateScenario(
     perfPct,
     entryPct,
@@ -101,11 +108,11 @@
     const extraTaxRate = extraTaxRatePct / 100;
     const deductibleLimit = Math.max(0, taxDeductibleCeiling);
 
-    const netGrowth = perf - mgmt; // net yearly growth rate
     const rows = [];
 
     let startingCapital = 0;
     let taxSavingAtEnd = 0;
+    let cumulativeFees = 0;
 
     for (let year = 1; year <= years; year++) {
       const baseContribution = contribution;
@@ -123,11 +130,19 @@
       const grossContribution = baseContribution + extraTaxContribution;
 
       // Entry fee applies on the total contribution
-      const netContribution = grossContribution * (1 - entry);
+      const entryFeePaid = grossContribution * entry;
+      const netContribution = grossContribution - entryFeePaid;
 
-      // Interest on starting capital + net contribution
-      const interest = (startingCapital + netContribution) * netGrowth;
+      // Management fee is charged on managed assets
+      const grossBase = startingCapital + netContribution;
+      const mgmtFeePaid = grossBase * mgmt;
+
+      // Interest on starting capital + net contribution before management fee
+      const grossInterest = grossBase * perf;
+      const interest = grossInterest - mgmtFeePaid;
       const endingCapital = startingCapital + netContribution + interest;
+
+      cumulativeFees += entryFeePaid + mgmtFeePaid;
 
       rows.push({
         year,
@@ -136,6 +151,9 @@
         netContribution,
         interest,
         endingCapital,
+        entryFeePaid,
+        mgmtFeePaid,
+        cumulativeFees,
       });
 
       startingCapital = endingCapital;
@@ -166,7 +184,7 @@
     tableBodyEl,
     options = {}
   ) {
-    const { taxSavingAtEnd = 0, taxSavingEl, taxCapitalAfterSavingEl } = options;
+    const { taxSavingAtEnd = 0, taxSavingEl, taxCapitalAfterSavingEl, feesEl, taxFeesEl } = options;
     tableBodyEl.innerHTML = "";
 
     if (!rows || rows.length === 0) {
@@ -183,6 +201,8 @@
         taxCapitalAfterEl,
       ].forEach((el) => (el.textContent = zero));
 
+      if (feesEl) feesEl.textContent = zero;
+      if (taxFeesEl) taxFeesEl.textContent = zero;
       if (taxSavingEl) taxSavingEl.textContent = zero;
       if (taxCapitalAfterSavingEl) taxCapitalAfterSavingEl.textContent = zero;
 
@@ -193,6 +213,7 @@
         capitalAfterTax: 0,
         capitalAfterTaxIncludingSavings: 0,
         taxSavingAtEnd: 0,
+        totalFees: 0,
       };
     }
 
@@ -204,6 +225,7 @@
     const tax = profit * finalTaxRateOnProfit;
     const capitalAfterTax = capitalBeforeTax - tax;
     const capitalAfterTaxIncludingSavings = capitalAfterTax + taxSavingAtEnd;
+    const totalFees = last.cumulativeFees || 0;
 
     // Summary
     totalContribEl.textContent = currencyFormatter.format(totalContributions);
@@ -211,6 +233,7 @@
     profitBeforeTaxEl.textContent = currencyFormatter.format(profit);
     const displayCapitalAfter = capitalAfterTaxIncludingSavings;
     capitalAfterTaxEl.textContent = currencyFormatter.format(displayCapitalAfter);
+    if (feesEl) feesEl.textContent = currencyFormatter.format(totalFees);
 
     // Tax summary
     taxTotalContribEl.textContent = currencyFormatter.format(totalContributions);
@@ -218,6 +241,7 @@
     taxFinalCapitalEl.textContent = currencyFormatter.format(capitalBeforeTax);
     taxAmountEl.textContent = currencyFormatter.format(tax);
     taxCapitalAfterEl.textContent = currencyFormatter.format(capitalAfterTax);
+    if (taxFeesEl) taxFeesEl.textContent = currencyFormatter.format(totalFees);
     if (taxSavingEl) taxSavingEl.textContent = currencyFormatter.format(taxSavingAtEnd);
     if (taxCapitalAfterSavingEl) taxCapitalAfterSavingEl.textContent = currencyFormatter.format(capitalAfterTaxIncludingSavings);
 
@@ -231,25 +255,30 @@
 
       const startTd = document.createElement("td");
       startTd.className = "px-3 py-2 text-slate-300 whitespace-nowrap text-right";
-      startTd.textContent = currencyFormatter.format(row.startingCapital);
+      startTd.textContent = currencyFormatterNoDecimals.format(row.startingCapital);
 
       const contribTd = document.createElement("td");
       contribTd.className = "px-3 py-2 text-slate-300 whitespace-nowrap text-right";
-      contribTd.textContent = currencyFormatter.format(row.netContribution);
+      contribTd.textContent = currencyFormatterNoDecimals.format(row.netContribution);
 
       const interestTd = document.createElement("td");
       interestTd.className = "px-3 py-2 text-slate-300 whitespace-nowrap text-right";
-      interestTd.textContent = currencyFormatter.format(row.interest);
+      interestTd.textContent = currencyFormatterNoDecimals.format(row.interest);
 
       const endTd = document.createElement("td");
       endTd.className = "px-3 py-2 text-slate-300 whitespace-nowrap text-right";
-      endTd.textContent = currencyFormatter.format(row.endingCapital);
+      endTd.textContent = currencyFormatterNoDecimals.format(row.endingCapital);
+
+      const feesTd = document.createElement("td");
+      feesTd.className = "px-3 py-2 text-slate-300 whitespace-nowrap text-right";
+      feesTd.textContent = currencyFormatterNoDecimals.format(row.cumulativeFees || 0);
 
       tr.appendChild(yearTd);
       tr.appendChild(startTd);
       tr.appendChild(contribTd);
       tr.appendChild(interestTd);
       tr.appendChild(endTd);
+      tr.appendChild(feesTd);
 
       tableBodyEl.appendChild(tr);
     }
@@ -261,6 +290,7 @@
       capitalAfterTax,
       capitalAfterTaxIncludingSavings,
       taxSavingAtEnd,
+      totalFees,
     };
   }
 
@@ -281,6 +311,7 @@
         datasetLabel: "Capital",
         labelA: "Scénario Pilier 3",
         labelB: "Scénario Compte-Titre avec ETF",
+        labelFeesA: "Frais (Pilier 3)",
       };
     }
     return {
@@ -289,6 +320,7 @@
       datasetLabel: "Capital",
       labelA: "Scenario Pillar 3",
       labelB: "Scenario Brokerage Account with ETF",
+      labelFeesA: "Fees paid (Pillar 3)",
     };
   }
 
@@ -306,13 +338,23 @@
           {
             label: texts.labelA,
             data: [],
+            stack: "scenario-a",
             backgroundColor: "rgba(153, 27, 27, 0.7)", // Pillar 3
             borderColor: "rgb(153, 27, 27)",
             borderWidth: 1,
           },
           {
+            label: texts.labelFeesA,
+            data: [],
+            stack: "scenario-a",
+            backgroundColor: "rgba(248, 113, 113, 0.55)",
+            borderColor: "rgba(248, 113, 113, 0.9)",
+            borderWidth: 1,
+          },
+          {
             label: texts.labelB,
             data: [],
+            stack: "scenario-b",
             backgroundColor: "rgba(30, 144, 255, 0.7)", // Brokerage/ETF
             borderColor: "rgb(30, 144, 255)",
             borderWidth: 1,
@@ -333,10 +375,11 @@
         },
         scales: {
           x: {
-            stacked: false,
+            stacked: true,
           },
           y: {
             beginAtZero: true,
+            stacked: true,
             title: {
               display: true,
               text: texts.yAxis,
@@ -406,15 +449,17 @@
     });
   }
 
-  function updateChart(yearLabels, dataA, dataB) {
+  function updateChart(yearLabels, dataA, dataB, feesA) {
     if (!comparisonChart) return;
     const texts = getChartTexts();
 
     comparisonChart.data.labels = yearLabels;
     comparisonChart.data.datasets[0].label = texts.labelA;
-    comparisonChart.data.datasets[1].label = texts.labelB;
+    comparisonChart.data.datasets[1].label = texts.labelFeesA;
+    comparisonChart.data.datasets[2].label = texts.labelB;
     comparisonChart.data.datasets[0].data = dataA;
-    comparisonChart.data.datasets[1].data = dataB;
+    comparisonChart.data.datasets[1].data = feesA;
+    comparisonChart.data.datasets[2].data = dataB;
 
     comparisonChart.options.plugins.title.text = texts.title;
     comparisonChart.options.scales.y.title.text = texts.yAxis;
@@ -486,6 +531,7 @@
       resultsBodyA,
       {
         taxSavingAtEnd: taxSavingAAtEnd,
+        taxFeesEl: taxFeesAEl,
         taxSavingEl: taxSavingAEl,
         taxCapitalAfterSavingEl: taxCapitalAfterSavingAEl,
       }
@@ -504,7 +550,10 @@
       taxFinalCapitalBEl,
       taxAmountBEl,
       taxCapitalAfterBEl,
-      resultsBodyB
+      resultsBodyB,
+      {
+        taxFeesEl: taxFeesBEl,
+      }
     );
 
     // Build per-year data for the chart
@@ -518,8 +567,11 @@
     // Scenario Compte Tître ETF: always ending capital (no tax)
     const dataB = rowsB.map((r) => r.endingCapital);
 
+    // Fees stacked on top of Scenario A
+    const feesAData = rowsA.map((r) => r.cumulativeFees || 0);
+
     // Update chart with per-year series
-    updateChart(yearLabels, dataA, dataB);
+    updateChart(yearLabels, dataA, dataB, feesAData);
   }
 
   // -----------------------
