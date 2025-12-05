@@ -312,6 +312,7 @@
         labelA: "Scénario Pilier 3",
         labelB: "Scénario Compte-Titre avec ETF",
         labelFeesA: "Frais (Pilier 3)",
+        labelFeesB: "Frais (Compte-Titre)",
       };
     }
     return {
@@ -321,6 +322,7 @@
       labelA: "Scenario Pillar 3",
       labelB: "Scenario Brokerage Account with ETF",
       labelFeesA: "Fees paid (Pillar 3)",
+      labelFeesB: "Fees paid (Brokerage)",
     };
   }
 
@@ -350,6 +352,7 @@
             backgroundColor: "rgba(248, 113, 113, 0.55)",
             borderColor: "rgba(248, 113, 113, 0.9)",
             borderWidth: 1,
+            hidden: true,
           },
           {
             label: texts.labelB,
@@ -358,6 +361,15 @@
             backgroundColor: "rgba(30, 144, 255, 0.7)", // Brokerage/ETF
             borderColor: "rgb(30, 144, 255)",
             borderWidth: 1,
+          },
+          {
+            label: texts.labelFeesB,
+            data: [],
+            stack: "scenario-b",
+            backgroundColor: "rgba(96, 165, 250, 0.55)",
+            borderColor: "rgba(59, 130, 246, 0.9)",
+            borderWidth: 1,
+            hidden: true,
           },
         ],
       },
@@ -449,7 +461,7 @@
     });
   }
 
-  function updateChart(yearLabels, dataA, dataB, feesA) {
+  function updateChart(yearLabels, dataA, dataB, feesA, feesB) {
     if (!comparisonChart) return;
     const texts = getChartTexts();
 
@@ -457,9 +469,11 @@
     comparisonChart.data.datasets[0].label = texts.labelA;
     comparisonChart.data.datasets[1].label = texts.labelFeesA;
     comparisonChart.data.datasets[2].label = texts.labelB;
+    comparisonChart.data.datasets[3].label = texts.labelFeesB;
     comparisonChart.data.datasets[0].data = dataA;
     comparisonChart.data.datasets[1].data = feesA;
     comparisonChart.data.datasets[2].data = dataB;
+    comparisonChart.data.datasets[3].data = feesB;
 
     comparisonChart.options.plugins.title.text = texts.title;
     comparisonChart.options.scales.y.title.text = texts.yAxis;
@@ -567,11 +581,18 @@
     // Scenario Compte Tître ETF: always ending capital (no tax)
     const dataB = rowsB.map((r) => r.endingCapital);
 
-    // Fees stacked on top of Scenario A
+    // Fees stacked on top of each scenario
     const feesAData = rowsA.map((r) => r.cumulativeFees || 0);
+    const feesBData = rowsB.map((r) => r.cumulativeFees || 0);
+
+    // Use the final after-tax + savings value for the last data point of Scenario A
+    const lastYearIdx = Math.max(0, rowsA.length - 1);
+    const dataAForChart = rowsA.map((r, idx) =>
+      idx === lastYearIdx ? summaryA.capitalAfterTaxIncludingSavings : r.endingCapital
+    );
 
     // Update chart with per-year series
-    updateChart(yearLabels, dataA, dataB, feesAData);
+    updateChart(yearLabels, dataAForChart, dataB, feesAData, feesBData);
   }
 
   // -----------------------
