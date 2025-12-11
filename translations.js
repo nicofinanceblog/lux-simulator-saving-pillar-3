@@ -8,7 +8,7 @@ window.translations = {
 
     "global-params-title": "Global parameters",
     "label-performance": "Performance (% per year)",
-    "help-performance": "Gross annual performance of the investment.",
+    "help-performance": "Annual performance of the investment.",
     "label-deposit": "Annual contribution (EUR)",
     "help-deposit": "Constant amount paid once per year (e.g. 6000€).",
     "label-tax-ceiling": "Tax-deductible ceiling (EUR)",
@@ -80,6 +80,16 @@ window.translations = {
 
     "chart-section-title": "Comparison charts",
     "chart-section-helper": "Charts show the capital for each year (final year after tax when applicable).",
+    "disclaimer-title": "Disclaimer",
+    "disclaimer-text-1":
+      "The simulation presented is based on the case of a single individual contributing €6,000 per year to a Pillar 3 retirement savings contract offered by a traditional insurer established in Luxembourg’s financial centre. The results are compared with those of a classic investment allocation composed of 60% equities and 40% bonds. Inflation has not been taken into account: all amounts are expressed in constant euros in order to avoid any distortion in interpretation. The projection covers a period of 25 years, corresponding to someone saving from age 40 to 65, assuming a net annual return of 6% after inflation. The management fees considered include both the fees charged by the insurer for the tax-efficient wrapper and those charged by the fund manager responsible for investing the capital.",
+    "disclaimer-text-2":
+      "I do not provide a simulation for the annuity option, as this would require including the additional implicit fees charged by the insurer when converting the accumulated capital into a lifetime annuity. These fees, embedded in the conversion rate, significantly reduce the amount of the annuity paid out and would make the comparison results unrepresentative — if not outright unbearable in light of the actual loss of value for the saver.",
+    "disclaimer-text-3":
+      "I am not your financial advisor. I am a retail investor who has managed my own assets for many years and share this experience openly. Each situation is unique, and everyone remains responsible for their own decisions and investments. The values and assumptions in my simulations reflect my view of an average investor in Luxembourg within a Pillar 3 context and cannot be generalized. This simulator is for informational purposes only and does not constitute financial advice. Please verify figures with your own calculations or a professional.",
+    "disclaimer-text-9-prefix": "If you want me to develop a specific simulator, feel free to",
+    "disclaimer-contact-link": "contact me",
+    "disclaimer-text-9-suffix": ".",
   },
   fr: {
     "title-main": "Luxembourg 🇱🇺 Simulateur Epargne-Pension Pilier 3",
@@ -87,7 +97,7 @@ window.translations = {
 
     "global-params-title": "Paramètres globaux",
     "label-performance": "Performance (% par an)",
-    "help-performance": "Performance annuelle brute de l’investissement.",
+    "help-performance": "Performance annuelle de l’investissement.",
     "label-deposit": "Contribution annuelle (EUR)",
     "help-deposit": "Montant constant versé une fois par an (ex. 6000€).",
     "label-tax-ceiling": "Plafond fiscal (EUR)",
@@ -111,7 +121,8 @@ window.translations = {
     "label-entry-b": "Frais d’entrée (%)",
     "label-mgmt-b": "Frais de gestion (% par an)",
     "note-scenario-b": "Le scénario Compte Tître ETF ne subit aucun impôt sur la plus-value finale (0%).",
-    "note-scenario-b-tax": "Au Luxembourg, l’impôt sur les plus-values est de 0% pour les investissements détenus plus de 6 mois, par un particulier, dans un compte-titres classique.",
+    "note-scenario-b-tax":
+      "Au Luxembourg, l’impôt sur les plus-values est de 0% pour les investissements détenus plus de 6 mois, par un particulier, dans un compte-titres classique.",
 
     "scenario-a-results-title": "Scénario Pilier 3 – Résultats",
     "scenario-a-results-badge": "Imposé",
@@ -159,5 +170,15 @@ window.translations = {
 
     "chart-section-title": "Graphiques de comparaison",
     "chart-section-helper": "Les graphiques montrent le capital pour chaque année (dernière année après impôt le cas échéant).",
+    "disclaimer-title": "Avertissement",
+    "disclaimer-text-1":
+      "La simulation présentée repose sur le cas d’une personne seule versant 6000€ par an dans un contrat de prévoyance Pilier 3 proposé par un assureur traditionnel établi sur la place financière de Luxembourg. Les résultats sont comparés à ceux d’une allocation d’investissement classique composée de 60% d’actions et de 40% d’obligations. L’inflation n’a pas été prise en compte : les montants sont exprimés en euros constants, afin d’éviter toute distorsion d’interprétation. La projection s’effectue sur une période de 25 ans, correspondant à la décision d’une personne qui épargne de 40 à 65 ans, en retenant un rendement net après inflation de 6% par an. Les frais de gestion pris en considération couvrent à la fois les frais prélevés par l’assureur pour l’enveloppe fiscale et ceux facturés par le gestionnaire du fonds dans lequel l’épargne est investie.",
+    "disclaimer-text-2":
+      "Je ne propose pas de simulation de sortie en rente, car celle-ci impliquerait d’intégrer les frais supplémentaires prélevés implicitement par l’assureur lors de la conversion du capital en rente viagère. Ces frais, intégrés dans le taux de conversion, réduisent fortement le montant de la rente versée et rendraient les résultats de la comparaison peu représentatifs, voire indécents au regard de la perte réelle de valeur pour l’épargnant.",
+    "disclaimer-text-3":
+      "Je ne suis pas votre conseiller financier. Je suis un investisseur particulier qui gère ses propres actifs depuis de nombreuses années et partage cette expérience ouvertement. Chaque situation est unique, et chacun reste responsable de ses propres décisions et investissements. Les valeurs et hypothèses de mes simulations reflètent ma vision d’un investisseur moyen au Luxembourg dans un contexte Pilier 3 et ne peuvent pas être généralisées. Ce simulateur est à but informatif uniquement et ne constitue pas un conseil financier. Veuillez vérifier les chiffres avec vos propres calculs ou un professionnel.",
+    "disclaimer-text-9-prefix": "Si vous souhaitez que je développe un simulateur spécifique, n’hésitez pas à",
+    "disclaimer-contact-link": "me solliciter",
+    "disclaimer-text-9-suffix": ".",
   },
 };
