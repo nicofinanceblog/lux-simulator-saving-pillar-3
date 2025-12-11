@@ -87,9 +87,12 @@ window.translations = {
       "I do not provide a simulation for the annuity option, as this would require including the additional implicit fees charged by the insurer when converting the accumulated capital into a lifetime annuity. These fees, embedded in the conversion rate, significantly reduce the amount of the annuity paid out and would make the comparison results unrepresentative — if not outright unbearable in light of the actual loss of value for the saver.",
     "disclaimer-text-3":
       "I am not your financial advisor. I am a retail investor who has managed my own assets for many years and share this experience openly. Each situation is unique, and everyone remains responsible for their own decisions and investments. The values and assumptions in my simulations reflect my view of an average investor in Luxembourg within a Pillar 3 context and cannot be generalized. This simulator is for informational purposes only and does not constitute financial advice. Please verify figures with your own calculations or a professional.",
-    "disclaimer-text-9-prefix": "If you want me to develop a specific simulator, feel free to",
+    "disclaimer-text-9-prefix": "If you have web development needs, feel free to",
     "disclaimer-contact-link": "contact me",
     "disclaimer-text-9-suffix": ".",
+    "dev-section-title": "Technical note",
+    "dev-section-text":
+      "This simulator is a lightweight web demo built in vanilla JavaScript without frameworks or a build step. Styling is handled with Tailwind via CDN, charts use Chart.js as the only external library, and everything is hosted on GitHub Pages.",
   },
   fr: {
     "title-main": "Luxembourg 🇱🇺 Simulateur Epargne-Pension Pilier 3",
@@ -177,8 +180,11 @@ window.translations = {
       "Je ne propose pas de simulation de sortie en rente, car celle-ci impliquerait d’intégrer les frais supplémentaires prélevés implicitement par l’assureur lors de la conversion du capital en rente viagère. Ces frais, intégrés dans le taux de conversion, réduisent fortement le montant de la rente versée et rendraient les résultats de la comparaison peu représentatifs, voire indécents au regard de la perte réelle de valeur pour l’épargnant.",
     "disclaimer-text-3":
       "Je ne suis pas votre conseiller financier. Je suis un investisseur particulier qui gère ses propres actifs depuis de nombreuses années et partage cette expérience ouvertement. Chaque situation est unique, et chacun reste responsable de ses propres décisions et investissements. Les valeurs et hypothèses de mes simulations reflètent ma vision d’un investisseur moyen au Luxembourg dans un contexte Pilier 3 et ne peuvent pas être généralisées. Ce simulateur est à but informatif uniquement et ne constitue pas un conseil financier. Veuillez vérifier les chiffres avec vos propres calculs ou un professionnel.",
-    "disclaimer-text-9-prefix": "Si vous souhaitez que je développe un simulateur spécifique, n’hésitez pas à",
-    "disclaimer-contact-link": "me solliciter",
+    "disclaimer-text-9-prefix": "Si vous avez des besoins en termes de développement web, n'hésitez pas à",
+    "disclaimer-contact-link": "me contacter",
     "disclaimer-text-9-suffix": ".",
+    "dev-section-title": "Note technique",
+    "dev-section-text":
+      "Ce simulateur est une application web légère développée en JavaScript vanilla, sans framework ni étape de build. Le style passe par Tailwind via CDN, les graphiques utilisent Chart.js comme seule bibliothèque externe, et l’ensemble est hébergé sur GitHub Pages.",
   },
 };
