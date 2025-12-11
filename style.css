@@ -6,6 +6,45 @@ body {
     padding: 0;
 }
 
+/* Emoji prefix for section titles (per-section icons below) */
+.section-title::before {
+    content: "";
+    display: inline-block;
+    margin-right: 4px;
+}
+
+#global-params-title.section-title::before {
+    content: "⚙️ ";
+}
+
+#scenario-a-title.section-title::before {
+    content: "🖍️ ";
+}
+
+#scenario-b-title.section-title::before {
+    content: "🖌️ ";
+}
+
+#scenario-a-results-title.section-title::before {
+    content: "📕 ";
+}
+
+#scenario-b-results-title.section-title::before {
+    content: "📘 ";
+}
+
+#chart-section-title.section-title::before {
+    content: "📊 ";
+}
+
+#disclaimer-title.section-title::before {
+    content: "⚠️ ";
+}
+
+#dev-section-title.section-title::before {
+    content: "🔩 ";
+}
+
 /* Base smoothing */
 body {
     -webkit-font-smoothing: antialiased;
