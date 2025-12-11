@@ -6,7 +6,7 @@ window.translations = {
     "title-main": "Luxembourg 🇱🇺 Pillar 3 Retirement Savings Calculator",
     "header-description": "Compare Pillar 3 retirement savings to investing in ETFs through a regular brokerage account.",
 
-    "global-params-title": "Global parameters",
+    "global-params-title": "Global Parameters",
     "label-performance": "Performance (% per year)",
     "help-performance": "Annual performance of the investment.",
     "label-deposit": "Annual contribution (EUR)",
@@ -27,7 +27,7 @@ window.translations = {
     "option-none-a": "Do nothing",
     "note-scenario-a": "Scenario Pillar 3 uses a 20% tax on profit at the end of the simulation.",
 
-    "scenario-b-title": "Scenario Brokerage Account with ETF",
+    "scenario-b-title": "Scenario Brokerage Account With ETF",
     "scenario-b-badge": "0% tax on profit",
     "label-entry-b": "Entry fee (%)",
     "label-mgmt-b": "Management fee (% per year)",
@@ -57,7 +57,7 @@ window.translations = {
     "tax-label-saving-a": "Tax savings added at end:",
     "tax-label-after-saving-a": "Final total (after tax + savings):",
 
-    "scenario-b-results-title": "Scenario Brokerage Account with ETF – Results",
+    "scenario-b-results-title": "Scenario Brokerage Account With ETF – Results",
     "scenario-b-results-badge": "No tax",
     "card-b-total-title": "Total contributions",
     "card-b-capital-before-title": "Capital before tax",
@@ -70,7 +70,7 @@ window.translations = {
     "th-interest-b": "Interest",
     "th-end-b": "December",
     "th-fees-b": "Fees paid",
-    "tax-title-b": "Scenario Brokerage Account with ETF",
+    "tax-title-b": "Scenario Brokerage Account With ETF",
     "tax-label-total-b": "Total contributions:",
     "tax-label-profit-b": "Profit before tax:",
     "tax-label-fees-b": "Fees paid over period:",
@@ -78,7 +78,7 @@ window.translations = {
     "tax-label-amount-b": "Tax (0% on profit):",
     "tax-label-after-b": "Capital after tax:",
 
-    "chart-section-title": "Comparison charts",
+    "chart-section-title": "Comparison Charts",
     "chart-section-helper": "Charts show the capital for each year (final year after tax when applicable).",
     "disclaimer-title": "Disclaimer",
     "disclaimer-text-1":
@@ -90,7 +90,7 @@ window.translations = {
     "disclaimer-text-9-prefix": "If you have web development needs, feel free to",
     "disclaimer-contact-link": "contact me",
     "disclaimer-text-9-suffix": ".",
-    "dev-section-title": "Technical note",
+    "dev-section-title": "Technical Note",
     "dev-section-text":
       "This simulator is a lightweight web demo built in vanilla JavaScript without frameworks or a build step. Styling is handled with Tailwind via CDN, charts use Chart.js as the only external library, and everything is hosted on GitHub Pages.",
   },
@@ -98,7 +98,7 @@ window.translations = {
     "title-main": "Luxembourg 🇱🇺 Simulateur Epargne-Pension Pilier 3",
     "header-description": "Comparez l’épargne-pension du Pilier 3 à un investissement en ETF sur un compte-titres classique.",
 
-    "global-params-title": "Paramètres globaux",
+    "global-params-title": "Paramètres Globaux",
     "label-performance": "Performance (% par an)",
     "help-performance": "Performance annuelle de l’investissement.",
     "label-deposit": "Contribution annuelle (EUR)",
@@ -119,7 +119,7 @@ window.translations = {
     "option-none-a": "Ne rien faire",
     "note-scenario-a": "Le scénario Pilier 3 applique un impôt de 20% sur la plus-value à la fin de la simulation.",
 
-    "scenario-b-title": "Scénario Compte-Titre avec ETF",
+    "scenario-b-title": "Scénario Compte-Titre Avec ETF",
     "scenario-b-badge": "0% d’impôt sur la plus-value",
     "label-entry-b": "Frais d’entrée (%)",
     "label-mgmt-b": "Frais de gestion (% par an)",
@@ -171,7 +171,7 @@ window.translations = {
     "tax-label-amount-b": "Impôt (0% de la plus-value) :",
     "tax-label-after-b": "Capital après impôt :",
 
-    "chart-section-title": "Graphiques de comparaison",
+    "chart-section-title": "Graphiques de Comparaison",
     "chart-section-helper": "Les graphiques montrent le capital pour chaque année (dernière année après impôt le cas échéant).",
     "disclaimer-title": "Avertissement",
     "disclaimer-text-1":
@@ -183,7 +183,7 @@ window.translations = {
     "disclaimer-text-9-prefix": "Si vous avez des besoins en termes de développement web, n'hésitez pas à",
     "disclaimer-contact-link": "me contacter",
     "disclaimer-text-9-suffix": ".",
-    "dev-section-title": "Note technique",
+    "dev-section-title": "Note Technique",
     "dev-section-text":
       "Ce simulateur est une application web légère développée en JavaScript vanilla, sans framework ni étape de build. Le style passe par Tailwind via CDN, les graphiques utilisent Chart.js comme seule bibliothèque externe, et l’ensemble est hébergé sur GitHub Pages.",
   },
