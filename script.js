@@ -1,8 +1,8 @@
 // script.js
 
 (function () {
-  // Final tax on profit at the end of the simulation
-  const TAX_RATE_A = 0.2; // 20% tax on profit for Scenario Pillar 3
+  // Final tax on the ending capital at the end of the simulation
+  const TAX_RATE_A = 0.2; // 20% tax on ending capital for Scenario Pillar 3
   const TAX_RATE_B = 0.0; // 0% tax on profit for Scenario Brokerage Account with ETF
 
   // Global inputs
@@ -168,7 +168,7 @@
    */
   function fillScenario(
     rows,
-    finalTaxRateOnProfit,
+    finalTaxRateOnCapital,
     // summary elements
     totalContribEl,
     capitalBeforeTaxEl,
@@ -222,7 +222,8 @@
     const last = rows[rows.length - 1];
     const capitalBeforeTax = last.endingCapital;
     const profit = Math.max(0, capitalBeforeTax - totalContributions);
-    const tax = profit * finalTaxRateOnProfit;
+    const taxBase = Math.max(0, capitalBeforeTax);
+    const tax = taxBase * finalTaxRateOnCapital;
     const capitalAfterTax = capitalBeforeTax - tax;
     const capitalAfterTaxIncludingSavings = capitalAfterTax + taxSavingAtEnd;
     const totalFees = last.cumulativeFees || 0;
