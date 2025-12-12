@@ -54,7 +54,7 @@ window.translations = {
     "tax-label-final-a": "Final ending capital:",
     "tax-label-amount-a": "Tax (20% on final capital):",
     "tax-label-after-a": "Capital after tax:",
-    "tax-label-saving-a": "Tax savings added at end:",
+    "tax-label-saving-a": "Tax savings on deposits added in the last year:",
     "tax-label-after-saving-a": "Final total (after tax + savings):",
 
     "scenario-b-results-title": "Scenario Brokerage Account With ETF – Results",
@@ -82,7 +82,7 @@ window.translations = {
     "chart-section-helper": "Charts show the capital for each year (final year after tax when applicable).",
     "disclaimer-title": "Disclaimer",
     "disclaimer-text-1":
-      "The simulation presented is based on the case of a single individual contributing €6,000 per year to a Pillar 3 retirement savings contract offered by a traditional insurer established in Luxembourg’s financial centre. The results are compared with those of a classic investment allocation composed of 60% equities and 40% bonds. Inflation has not been taken into account: all amounts are expressed in constant euros in order to avoid any distortion in interpretation. The projection covers a period of 25 years, corresponding to someone saving from age 40 to 65, assuming a net annual return of 6% after inflation. The management fees considered include both the fees charged by the insurer for the tax-efficient wrapper and those charged by the fund manager responsible for investing the capital.",
+      "This simulation looks at the example of a single person who invests €6,000 per year in a Pillar 3 retirement insurance plan offered by a traditional insurer based in Luxembourg. The results are then compared with a more traditional investment approach, using a standard securities account invested in ETFs.\nInflation is not included in the analysis: all amounts are shown in constant euros to make the comparison easier to understand. The projection covers a 25-year period, reflecting the situation of someone saving from age 40 to 65, and assumes an average annual return of 6% after inflation. The fees taken into account include both the costs charged by the insurer for the tax-advantaged structure and the management fees of the investment funds themselves.\nAt the end of the saving period, the capital is withdrawn in a single lump sum. In the case of the Pillar 3 plan, the entire amount received is subject to a flat tax of 20%.",
     "disclaimer-text-2":
       "I do not provide a simulation for the annuity option, as this would require including the additional implicit fees charged by the insurer when converting the accumulated capital into a lifetime annuity. These fees, embedded in the conversion rate, significantly reduce the amount of the annuity paid out and would make the comparison results unrepresentative — if not outright unbearable in light of the actual loss of value for the saver.",
     "disclaimer-text-3":
@@ -147,7 +147,7 @@ window.translations = {
     "tax-label-final-a": "Capital final avant impôt :",
     "tax-label-amount-a": "Impôt (20% du capital final) :",
     "tax-label-after-a": "Capital après impôt :",
-    "tax-label-saving-a": "Économie d'impôt ajoutée en fin de période :",
+    "tax-label-saving-a": "Économies d'impôt sur les versements ajoutées la dernière année :",
     "tax-label-after-saving-a": "Total final (après impôt + économies) :",
 
     "scenario-b-results-title": "Scénario Compte-Titre avec ETF – Résultats",
@@ -175,7 +175,7 @@ window.translations = {
     "chart-section-helper": "Les graphiques montrent le capital pour chaque année (dernière année après impôt le cas échéant).",
     "disclaimer-title": "Avertissement",
     "disclaimer-text-1":
-      "La simulation présentée repose sur le cas d’une personne seule versant 6000€ par an dans un contrat de prévoyance Pilier 3 proposé par un assureur traditionnel établi sur la place financière de Luxembourg. Les résultats sont comparés à ceux d’une allocation d’investissement classique composée de 60% d’actions et de 40% d’obligations. L’inflation n’a pas été prise en compte : les montants sont exprimés en euros constants, afin d’éviter toute distorsion d’interprétation. La projection s’effectue sur une période de 25 ans, correspondant à la décision d’une personne qui épargne de 40 à 65 ans, en retenant un rendement net après inflation de 6% par an. Les frais de gestion pris en considération couvrent à la fois les frais prélevés par l’assureur pour l’enveloppe fiscale et ceux facturés par le gestionnaire du fonds dans lequel l’épargne est investie.",
+      "Cette simulation prend l’exemple d’une personne seule qui investit 6000€ par an dans un contrat de prévoyance Pilier 3 proposé par un assureur traditionnel basé au Luxembourg. Les résultats sont ensuite comparés à une approche d’investissement plus classique, via un compte-titres investi en ETF.\nL’inflation n’est pas prise en compte dans l’analyse : tous les montants sont exprimés en euros constants afin de faciliter la compréhension et la comparaison. La projection couvre une période de 25 ans, correspondant à la situation d’une personne épargnant de 40 à 65 ans, avec un rendement annuel moyen de 6% après inflation. Les frais pris en compte incluent à la fois ceux facturés par l’assureur pour l’enveloppe fiscale et les frais de gestion des fonds d’investissement.\nÀ l’issue de la période d’épargne, le capital est retiré en une seule fois. Dans le cas du Pilier 3, l’intégralité du capital perçu est soumise à une imposition forfaitaire de 20%.",
     "disclaimer-text-2":
       "Je ne propose pas de simulation de sortie en rente, car celle-ci impliquerait d’intégrer les frais supplémentaires prélevés implicitement par l’assureur lors de la conversion du capital en rente viagère. Ces frais, intégrés dans le taux de conversion, réduisent fortement le montant de la rente versée et rendraient les résultats de la comparaison peu représentatifs, voire indécents au regard de la perte réelle de valeur pour l’épargnant.",
     "disclaimer-text-3":

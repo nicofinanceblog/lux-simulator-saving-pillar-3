@@ -214,6 +214,7 @@
         capitalAfterTaxIncludingSavings: 0,
         taxSavingAtEnd: 0,
         totalFees: 0,
+        taxAmount: 0,
       };
     }
 
@@ -292,6 +293,7 @@
       capitalAfterTaxIncludingSavings,
       taxSavingAtEnd,
       totalFees,
+      taxAmount: tax,
     };
   }
 
@@ -312,6 +314,7 @@
         datasetLabel: "Capital",
         labelA: "Scénario Pilier 3",
         labelB: "Scénario Compte-Titre avec ETF",
+        labelTaxA: "Impôt payé (Pilier 3)",
         labelFeesA: "Frais (Pilier 3)",
         labelFeesB: "Frais (Compte-Titre)",
       };
@@ -322,6 +325,7 @@
       datasetLabel: "Capital",
       labelA: "Scenario Pillar 3",
       labelB: "Scenario Brokerage Account with ETF",
+      labelTaxA: "Tax paid (Pillar 3)",
       labelFeesA: "Fees paid (Pillar 3)",
       labelFeesB: "Fees paid (Brokerage)",
     };
@@ -352,6 +356,15 @@
             stack: "scenario-a",
             backgroundColor: "rgba(248, 113, 113, 0.55)",
             borderColor: "rgba(248, 113, 113, 0.9)",
+            borderWidth: 1,
+            hidden: true,
+          },
+          {
+            label: texts.labelTaxA,
+            data: [],
+            stack: "scenario-a",
+            backgroundColor: "rgba(239, 68, 68, 0.8)",
+            borderColor: "rgb(220, 38, 38)",
             borderWidth: 1,
             hidden: true,
           },
@@ -462,19 +475,21 @@
     });
   }
 
-  function updateChart(yearLabels, dataA, dataB, feesA, feesB) {
+  function updateChart(yearLabels, dataA, dataB, feesA, feesB, taxA) {
     if (!comparisonChart) return;
     const texts = getChartTexts();
 
     comparisonChart.data.labels = yearLabels;
     comparisonChart.data.datasets[0].label = texts.labelA;
     comparisonChart.data.datasets[1].label = texts.labelFeesA;
-    comparisonChart.data.datasets[2].label = texts.labelB;
-    comparisonChart.data.datasets[3].label = texts.labelFeesB;
+    comparisonChart.data.datasets[2].label = texts.labelTaxA;
+    comparisonChart.data.datasets[3].label = texts.labelB;
+    comparisonChart.data.datasets[4].label = texts.labelFeesB;
     comparisonChart.data.datasets[0].data = dataA;
     comparisonChart.data.datasets[1].data = feesA;
-    comparisonChart.data.datasets[2].data = dataB;
-    comparisonChart.data.datasets[3].data = feesB;
+    comparisonChart.data.datasets[2].data = taxA;
+    comparisonChart.data.datasets[3].data = dataB;
+    comparisonChart.data.datasets[4].data = feesB;
 
     comparisonChart.options.plugins.title.text = texts.title;
     comparisonChart.options.scales.y.title.text = texts.yAxis;
@@ -574,11 +589,6 @@
     // Build per-year data for the chart
     const yearLabels = rowsA.map((r) => r.year);
 
-    // Scenario Pillar 3: final year after tax, other years = ending capital
-    const dataA = rowsA.map((r, idx) =>
-      idx === rowsA.length - 1 ? summaryA.capitalAfterTaxIncludingSavings : r.endingCapital
-    );
-
     // Scenario Compte Tître ETF: always ending capital (no tax)
     const dataB = rowsB.map((r) => r.endingCapital);
 
@@ -591,9 +601,10 @@
     const dataAForChart = rowsA.map((r, idx) =>
       idx === lastYearIdx ? summaryA.capitalAfterTaxIncludingSavings : r.endingCapital
     );
+    const taxAData = rowsA.map((r, idx) => (idx === lastYearIdx ? summaryA.taxAmount : 0));
 
     // Update chart with per-year series
-    updateChart(yearLabels, dataAForChart, dataB, feesAData, feesBData);
+    updateChart(yearLabels, dataAForChart, dataB, feesAData, feesBData, taxAData);
   }
 
   // -----------------------
