@@ -3,7 +3,7 @@
 
 window.translations = {
   en: {
-    "title-main": "Luxembourg 🇱🇺 Pillar 3 Retirement Savings Calculator",
+    "title-main": "Luxembourg - Pillar 3 Retirement Savings Calculator",
     "header-description": "Compare Pillar 3 retirement savings to investing in ETFs through a regular brokerage account.",
 
     "global-params-title": "Global Parameters",
@@ -95,7 +95,7 @@ window.translations = {
       "This simulator is a lightweight web demo built in vanilla JavaScript without frameworks or a build step. Styling is handled with Tailwind via CDN, charts use Chart.js as the only external library, and everything is hosted on GitHub Pages.",
   },
   fr: {
-    "title-main": "Luxembourg 🇱🇺 Simulateur Epargne-Pension Pilier 3",
+    "title-main": "Luxembourg - Simulateur Epargne-Pension Pilier 3",
     "header-description": "Comparez l’épargne-pension du Pilier 3 à un investissement en ETF sur un compte-titres classique.",
 
     "global-params-title": "Paramètres Globaux",
